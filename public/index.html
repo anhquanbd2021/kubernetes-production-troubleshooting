@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="K8s Triage Lab — a simulated Kubernetes cluster with four live incidents: a Pending pod, a CrashLoopBackOff, an etcd NOSPACE freeze, and a 404 through the Ingress. Run the commands, name the cause, apply the fix.">
+  <title>K8s Triage Lab — 4 production incidents, hands-on</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap">
+  <link rel="stylesheet" href="/tokens.css">
+  <link rel="stylesheet" href="/styles.css">
+<!-- pb-shell --><link rel="stylesheet" href="./pb-shell.css"><!-- pb-shell --><!-- pb-back --><link rel="stylesheet" href="./pb-back.css"><!-- pb-back --></head>
+<body>
+<a class="skip-link" href="#lab">Skip to the triage lab</a>
+<main>
+  <nav aria-label="Primary"><a aria-current="page" href="/">Lab</a><a href="/guide.html">Guide</a><a href="https://github.com/anhquanbd2021/kubernetes-production-troubleshooting">Source</a></nav>
+  <header class="hero">
+    <div><p class="eyebrow">K8s Triage Lab · four incidents live</p><h1>Four incidents are live in this cluster. Triage them.</h1><p class="lede">A pod stuck Pending, a workload in CrashLoopBackOff, a control plane that stopped accepting writes, and a 404 that made it past the Ingress. Each one is diagnosed the way production is diagnosed — read the events, walk the object chain, then touch things. The lab grades your order of operations.</p></div>
+    <p class="warning"><strong>Simulated cluster.</strong> Every pod, node, and error is a fixture — the commands are canned, but the evidence is honest and the grading is real.</p>
+  </header>
+
+  <section class="cluster-strip" aria-label="Cluster status">
+    <article class="incident-card" data-incident="pending-pod"><div class="card-head"><h3>payments-api</h3><span class="state-badge warn" data-badge>Pending</span></div><p>0/1 · no node will take it · 22m and counting</p></article>
+    <article class="incident-card" data-incident="crashloop"><div class="card-head"><h3>orders-worker</h3><span class="state-badge crit" data-badge>CrashLoopBackOff</span></div><p>restarts: 14 and climbing · dies seconds after boot</p></article>
+    <article class="incident-card" data-incident="etcd-nospace"><div class="card-head"><h3>control plane</h3><span class="state-badge crit" data-badge>writes frozen</span></div><p>reads serve · every apply times out · etcd alarm</p></article>
+    <article class="incident-card" data-incident="ingress-404"><div class="card-head"><h3>/checkout</h3><span class="state-badge warn" data-badge>404</span></div><p>pods Running · users get 404 Not Found anyway</p></article>
+  </section>
+
+  <section class="workspace" id="lab" aria-label="Triage workspace">
+    <section class="panel console" aria-labelledby="ws-title">
+      <p class="eyebrow">simulated cluster · kubeconfig loaded · namespace shop</p>
+      <h2 id="ws-title">Pick an incident to begin</h2>
+      <div class="incident-picker" id="incident-picker" role="tablist" aria-label="Incidents"></div>
+      <p id="ws-symptom" class="muted">Four incidents are open. Work them in any order — each one is graded separately.</p>
+
+      <h3 class="group-label">Commands</h3>
+      <div class="cmd-list" id="cmd-list"><p class="muted">Select an incident above — its commands appear here.</p></div>
+
+      <h3 class="group-label">Diagnosis <span class="hint">(first answer locks)</span></h3>
+      <div class="diag-list" id="diag-list" role="radiogroup" aria-label="Diagnosis options"><p class="muted">—</p></div>
+      <div class="row"><button id="diag-submit" type="button" disabled>Submit diagnosis</button></div>
+
+      <h3 class="group-label">Fixes</h3>
+      <div class="cmd-list" id="fix-list"><p class="muted">—</p></div>
+    </section>
+
+    <section class="panel output-panel" aria-labelledby="out-title">
+      <div class="section-heading"><div><p class="eyebrow">output</p><h2 id="out-title">Cluster says</h2></div><span id="grade-badge" class="badge" role="status" aria-live="polite">awaiting triage</span></div>
+      <pre id="term" class="term" aria-live="polite">triage-lab ~ $ kubectl get incidents
+INC-1  payments-api   Pending            scheduling
+INC-2  orders-worker  CrashLoopBackOff   runtime
+INC-3  control-plane  writes frozen      etcd NOSPACE
+INC-4  /checkout      404 Not Found      ingress path</pre>
+      <p id="grade-detail" class="muted"></p>
+    </section>
+  </section>
+
+  <section class="recap" aria-label="What each incident teaches">
+    <p class="eyebrow">the order that never changes</p>
+    <h2>Read events first, then walk the object chain</h2>
+    <div class="recap-grid">
+      <article><h3>Pending</h3><p><code>describe pod</code> events name the scheduler's refusal — resources, taints, volumes.</p></article>
+      <article><h3>CrashLoopBackOff</h3><p><code>logs --previous</code> plus the exit code separates app, config, limits, and probes.</p></article>
+      <article><h3>Writes frozen</h3><p><code>etcdctl alarm list</code> shows NOSPACE — defrag, compact, disarm, in that order.</p></article>
+      <article><h3>404</h3><p>Trace Ingress → Service → Endpoints → Pod labels → app routes. The break lives at exactly one hop.</p></article>
+    </div>
+  </section>
+
+  <p class="foot"><a href="/guide.html">Read the incident guide</a> · <a href="https://github.com/anhquanbd2021/kubernetes-production-troubleshooting">Inspect source and tests</a></p>
+</main>
+<script type="module" src="/app.js"></script>
+<!-- pb-shell --><a class="pb-shell" href="https://github.com/anhquanbd2021/kubernetes-production-troubleshooting" title="kubernetes-production-troubleshooting — an Article Playbook demo (view source)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2" y="2" width="9" height="9" rx="2" fill="currentColor"/><rect x="13" y="2" width="9" height="9" rx="2" fill="currentColor" opacity=".45"/><rect x="2" y="13" width="9" height="9" rx="2" fill="currentColor" opacity=".45"/><rect x="13" y="13" width="9" height="9" rx="4.5" fill="currentColor"/></svg><b>kubernetes-production-troubleshooting</b><i>DEMO</i></a><!-- pb-shell --><!-- pb-back --><a class="pb-back" id="pb-back" href="https://github.com/anhquanbd2021/kubernetes-production-troubleshooting" title="Back to the article — kubernetes-production-troubleshooting">← Article <i>PLAYBOOK</i></a><script>(function(){var a=document.getElementById('pb-back');if(!a)return;var h=location.hostname;if(/^(localhost|127\.0\.0\.1|192\.168\.|10\.|172\.(1[6-9]|2[0-9]|3[01])\.)/.test(h)){a.href='//'+h+':'+(/^(localhost|127\.0\.0\.1)$/.test(h)?'1234':'30082')+'/microsites/article.html?slug=kubernetes-production-troubleshooting';}})();</script><!-- pb-back --></body>
+</html>

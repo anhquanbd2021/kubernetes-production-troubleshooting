@@ -1,0 +1,60 @@
+{
+  "file": "D:\\LinkedIn\\DOCS\\Articles\\kubernetes-production-troubleshooting\\demo\\public\\index.html",
+  "type": "web",
+  "verdict": "PASS",
+  "qualified": 4,
+  "verdict_label": "PASS (with skipped/not-applicable checks)",
+  "checks": [
+    {
+      "name": "plan-check",
+      "script": "plan-check.mts",
+      "status": "pass",
+      "issues": []
+    },
+    {
+      "name": "tells",
+      "script": "tells.mts",
+      "status": "pass",
+      "issues": []
+    },
+    {
+      "name": "asset-manifest",
+      "status": "pass",
+      "issues": [],
+      "detail": "0 asset(s) recorded → asset-review.json",
+      "script": "assets-check.mts"
+    },
+    {
+      "name": "screenshots",
+      "script": "shoot.mts",
+      "status": "unverified",
+      "issues": [
+        "canonical MYDESIGN_NO_BROWSER from child"
+      ]
+    },
+    {
+      "name": "website-check",
+      "script": "website-check.mts",
+      "status": "unverified",
+      "issues": [
+        "canonical MYDESIGN_NO_BROWSER from child"
+      ]
+    },
+    {
+      "name": "contact-sheet",
+      "status": "unverified",
+      "issues": [],
+      "detail": "no browser — captures were never produced"
+    },
+    {
+      "name": "palette-check",
+      "status": "skipped",
+      "issues": [],
+      "detail": "no captures to palette-check"
+    }
+  ],
+  "failed": [],
+  "report": "D:\\LinkedIn\\DOCS\\Articles\\kubernetes-production-troubleshooting\\demo\\design-check\\design-report.md",
+  "contactSheet": null,
+  "screenshots": []
+}

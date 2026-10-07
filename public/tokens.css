@@ -1,0 +1,42 @@
+/* tokens.css — direction "terminal-ledger" (generated; do not hand-edit) */
+:root {
+  --color-bg: #0b0f0c;
+  --color-text: #d6e8d9;
+  --color-surface: #131a15;
+  --color-accent-fill: #22c55e;
+  --color-accent-text: #042713;
+  --color-on-accent: #042713;
+  --accent-50: #dfffe4;
+  --accent-100: #b4ffc2;
+  --accent-200: #7bf298;
+  --accent-300: #58d97b;
+  --accent-400: #29be5d;
+  --accent-500: #009f47;
+  --accent-600: #007f37;
+  --accent-700: #006329;
+  --accent-800: #00491d;
+  --accent-900: #003312;
+  --accent-950: #001d07;
+  --step-xs: 12px;
+  --step-sm: 14px;
+  --step-base: 16px;
+  --step-lg: 20px;
+  --step-xl: 28px;
+  --step-2xl: 40px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --font-heading: IBM Plex Mono, monospace;
+  --font-body: IBM Plex Sans, sans-serif;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

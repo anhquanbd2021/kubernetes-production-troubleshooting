@@ -1,0 +1,16 @@
+{
+  "name": "kubernetes-production-troubleshooting-demo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "K8s Triage Lab — a simulated cluster with four live incidents (Pending pod, CrashLoopBackOff, etcd NOSPACE, 404 through Ingress). Run kubectl-style commands, diagnose, fix — graded on order of operations.",
+  "scripts": {
+    "start": "node app/server.js",
+    "prove": "node scripts/prove.mjs",
+    "test": "node --test \"test/*.test.mjs\"",
+    "check": "npm test && npm run prove"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

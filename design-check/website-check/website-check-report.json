@@ -1,0 +1,24 @@
+{
+  "schema": "design-check/website-check/1",
+  "file": "D:\\LinkedIn\\DOCS\\Articles\\kubernetes-production-troubleshooting\\demo\\public\\index.html",
+  "pass": true,
+  "fails": [],
+  "warnings": [
+    "no website.design.json found — model leg skipped",
+    "href \"/tokens.css\" resolves outside the target dir — unchecked",
+    "href \"/styles.css\" resolves outside the target dir — unchecked",
+    "href \"/\" resolves outside the target dir — unchecked",
+    "href \"/guide.html\" resolves outside the target dir — unchecked",
+    "href \"/guide.html\" resolves outside the target dir — unchecked",
+    "href \"//\" resolves outside the target dir — unchecked"
+  ],
+  "coverage": {
+    "verified": [
+      "static-html"
+    ],
+    "unverified": [
+      "model (no website.design.json)",
+      "render-agreement (2 leg(s)) — no browser runtime"
+    ]
+  }
+}
